@@ -1,8 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Users, TrendingUp } from "lucide-react";
-import discoveryBoxDark from "@/assets/discovery-box-dark.png";
-import discoveryBoxLight from "@/assets/discovery-box-light.png";
+import discoveryBoxDark from "@/assets/discovery-box-dark-new.png";
+import discoveryBoxLight from "@/assets/discovery-box-light-new.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -19,7 +19,7 @@ export const HeroCard = () => {
         {/* Large floating image with breakthrough effect - behind text */}
         <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 z-0">
           <div className="relative">
-            <div className="w-96 h-96 relative">
+            <div className="w-[576px] h-[576px] relative">
               <img 
                 src={theme === 'light' ? discoveryBoxLight : discoveryBoxDark} 
                 alt="Discovery Box" 
