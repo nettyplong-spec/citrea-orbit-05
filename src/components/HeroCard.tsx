@@ -17,7 +17,7 @@ export const HeroCard = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/10" />
         
         {/* Large floating image with breakthrough effect - behind text */}
-        <div className="absolute -top-64 left-1/2 transform -translate-x-1/2 z-20">
+        <div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-20">
           <div className="relative">
             <div className="w-[576px] h-[576px] relative">
               <img 
