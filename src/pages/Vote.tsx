@@ -123,158 +123,236 @@ export default function Vote() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-gradient-primary p-4 pb-6">
+      <div className="bg-gradient-primary p-4 md:px-6 lg:px-8 pb-6">
         <div className="space-y-3">
           <div className="text-center space-y-1">
-            <h1 className="text-xl font-bold text-white">Vote & Earn</h1>
-            <p className="text-mobile-sm text-white/80">
+            <h1 className="text-xl md:text-2xl font-bold text-white">Vote & Earn</h1>
+            <p className="text-mobile-sm md:text-base text-white/80">
               Cast votes on dApps and governance proposals
             </p>
           </div>
           
           {/* Stats Cards */}
-          <div className="grid grid-cols-3 gap-3">
-            <Card className="p-3 bg-white/10 border-white/20 text-center">
-              <Zap className="h-4 w-4 text-accent mx-auto mb-1" />
-              <p className="text-mobile-xs text-white/80">Earned</p>
-              <p className="text-mobile-sm font-bold text-white">
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 max-w-4xl mx-auto">
+            <Card className="p-3 md:p-4 bg-white/10 border-white/20 text-center">
+              <Zap className="h-4 w-4 md:h-5 md:w-5 text-accent mx-auto mb-1" />
+              <p className="text-mobile-xs md:text-sm text-white/80">Earned</p>
+              <p className="text-mobile-sm md:text-base font-bold text-white">
                 {myTotalRewards} CP
               </p>
             </Card>
             
-            <Card className="p-3 bg-white/10 border-white/20 text-center">
-              <TrendingUp className="h-4 w-4 text-white mx-auto mb-1" />
-              <p className="text-mobile-xs text-white/80">My Votes</p>
-              <p className="text-mobile-sm font-bold text-white">
+            <Card className="p-3 md:p-4 bg-white/10 border-white/20 text-center">
+              <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-white mx-auto mb-1" />
+              <p className="text-mobile-xs md:text-sm text-white/80">My Votes</p>
+              <p className="text-mobile-sm md:text-base font-bold text-white">
                 {votingItems.filter(item => item.myVote).length}
               </p>
             </Card>
             
-            <Card className="p-3 bg-white/10 border-white/20 text-center">
-              <Users className="h-4 w-4 text-white mx-auto mb-1" />
-              <p className="text-mobile-xs text-white/80">Accuracy</p>
-              <p className="text-mobile-sm font-bold text-white">87%</p>
+            <Card className="p-3 md:p-4 bg-white/10 border-white/20 text-center">
+              <Users className="h-4 w-4 md:h-5 md:w-5 text-white mx-auto mb-1" />
+              <p className="text-mobile-xs md:text-sm text-white/80">Accuracy</p>
+              <p className="text-mobile-sm md:text-base font-bold text-white">87%</p>
             </Card>
           </div>
         </div>
       </div>
 
-      <div className="p-4 space-y-4 -mt-2">
-        {/* Category Filters */}
-        <div className="flex space-x-2 overflow-x-auto pb-2">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(category)}
-              className="whitespace-nowrap text-mobile-xs"
-            >
-              {category}
-            </Button>
-          ))}
-        </div>
-
-        {/* Active Votes */}
-        <div className="space-y-3">
-          <h2 className="text-mobile-base font-semibold text-foreground flex items-center">
-            <TrendingUp className="h-4 w-4 mr-2 text-primary" />
-            Active Votes
-          </h2>
+      <div className="p-4 md:px-6 lg:px-8 space-y-4 -mt-2">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8 space-y-6 lg:space-y-0">
           
-          <div className="space-y-3">
-            {filteredItems.map((item) => {
-              const upvotePercentage = item.totalVotes > 0 ? (item.upvotes / item.totalVotes) * 100 : 0;
+          {/* Main Content */}
+          <div className="lg:col-span-8 space-y-6">
+            {/* Category Filters */}
+            <div className="flex space-x-2 overflow-x-auto pb-2">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category)}
+                  className="whitespace-nowrap text-mobile-xs md:text-sm"
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+
+            {/* Active Votes */}
+            <div className="space-y-3">
+              <h2 className="text-mobile-base md:text-lg font-semibold text-foreground flex items-center">
+                <TrendingUp className="h-4 w-4 mr-2 text-primary" />
+                Active Votes
+              </h2>
               
-              return (
-                <Card key={item.id} className="p-4 bg-gradient-card border-border/50">
-                  <div className="space-y-3">
-                    {/* Header */}
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <Badge variant="outline" className="text-mobile-xs">
-                            {item.category}
-                          </Badge>
-                          <Badge 
-                            variant="secondary" 
-                            className="text-mobile-xs flex items-center space-x-1"
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+                {filteredItems.map((item) => {
+                  const upvotePercentage = item.totalVotes > 0 ? (item.upvotes / item.totalVotes) * 100 : 0;
+                  
+                  return (
+                    <Card key={item.id} className="p-4 bg-gradient-card border-border/50">
+                      <div className="space-y-3">
+                        {/* Header */}
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2 mb-1">
+                              <Badge variant="outline" className="text-mobile-xs md:text-sm">
+                                {item.category}
+                              </Badge>
+                              <Badge 
+                                variant="secondary" 
+                                className="text-mobile-xs md:text-sm flex items-center space-x-1"
+                              >
+                                <Clock className="h-3 w-3" />
+                                <span>{item.timeLeft}</span>
+                              </Badge>
+                            </div>
+                            
+                            <h3 className="text-mobile-sm md:text-base font-semibold text-foreground mb-1">
+                              {item.title}
+                            </h3>
+                            <p className="text-mobile-xs md:text-sm text-muted-foreground">
+                              {item.description}
+                            </p>
+                          </div>
+                          
+                          {item.image && (
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-lg overflow-hidden ml-3">
+                              <img src={item.image} alt="" className="w-full h-full object-cover" />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Vote Progress */}
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-mobile-xs md:text-sm text-muted-foreground">
+                            <span>{item.upvotes} upvotes</span>
+                            <span>{item.downvotes} downvotes</span>
+                          </div>
+                          
+                          <Progress value={upvotePercentage} className="h-1.5 md:h-2" />
+                          
+                          <div className="flex items-center justify-between">
+                            <span className="text-mobile-xs md:text-sm text-muted-foreground">
+                              {item.totalVotes} total votes
+                            </span>
+                            <Badge className="bg-accent/20 text-accent border-0 text-mobile-xs md:text-sm">
+                              +{item.reward} CP
+                            </Badge>
+                          </div>
+                        </div>
+
+                        {/* Vote Buttons */}
+                        <div className="flex space-x-2">
+                          <Button
+                            variant={item.myVote === "up" ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handleVote(item.id, "up")}
+                            className="flex-1 text-mobile-xs md:text-sm"
+                            disabled={!!item.myVote && item.myVote !== "up"}
                           >
-                            <Clock className="h-3 w-3" />
-                            <span>{item.timeLeft}</span>
-                          </Badge>
+                            <ThumbsUp className="h-3 w-3 mr-1" />
+                            Upvote
+                          </Button>
+                          
+                          <Button
+                            variant={item.myVote === "down" ? "destructive" : "outline"}
+                            size="sm"
+                            onClick={() => handleVote(item.id, "down")}
+                            className="flex-1 text-mobile-xs md:text-sm"
+                            disabled={!!item.myVote && item.myVote !== "down"}
+                          >
+                            <ThumbsDown className="h-3 w-3 mr-1" />
+                            Downvote
+                          </Button>
                         </div>
                         
-                        <h3 className="text-mobile-sm font-semibold text-foreground mb-1">
-                          {item.title}
-                        </h3>
-                        <p className="text-mobile-xs text-muted-foreground">
-                          {item.description}
-                        </p>
+                        {item.myVote && (
+                          <div className="text-center">
+                            <Badge className="bg-accent/20 text-accent border-0 text-mobile-xs md:text-sm">
+                              Vote recorded! +{item.reward} CP earned
+                            </Badge>
+                          </div>
+                        )}
                       </div>
-                      
-                      {item.image && (
-                        <div className="w-10 h-10 bg-muted rounded-lg overflow-hidden ml-3">
-                          <img src={item.image} alt="" className="w-full h-full object-cover" />
-                        </div>
-                      )}
-                    </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
 
-                    {/* Vote Progress */}
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-mobile-xs text-muted-foreground">
-                        <span>{item.upvotes} upvotes</span>
-                        <span>{item.downvotes} downvotes</span>
-                      </div>
-                      
-                      <Progress value={upvotePercentage} className="h-1.5" />
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-mobile-xs text-muted-foreground">
-                          {item.totalVotes} total votes
-                        </span>
-                        <Badge className="bg-accent/20 text-accent border-0 text-mobile-xs">
-                          +{item.reward} CP
-                        </Badge>
-                      </div>
-                    </div>
+          {/* Right Sidebar - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-4 space-y-6">
+            {/* Voting Stats */}
+            <Card className="p-4 bg-gradient-card border-border/50">
+              <h3 className="text-base font-semibold text-foreground mb-3">Your Voting Stats</h3>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">Total Votes Cast</span>
+                  <span className="text-sm font-medium text-foreground">
+                    {votingItems.filter(item => item.myVote).length}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">CP Earned</span>
+                  <span className="text-sm font-medium text-accent">{myTotalRewards}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">Voting Accuracy</span>
+                  <span className="text-sm font-medium text-success">87%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">Streak</span>
+                  <span className="text-sm font-medium text-foreground">5 days</span>
+                </div>
+              </div>
+            </Card>
 
-                    {/* Vote Buttons */}
-                    <div className="flex space-x-2">
-                      <Button
-                        variant={item.myVote === "up" ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => handleVote(item.id, "up")}
-                        className="flex-1 text-mobile-xs"
-                        disabled={!!item.myVote && item.myVote !== "up"}
-                      >
-                        <ThumbsUp className="h-3 w-3 mr-1" />
-                        Upvote
-                      </Button>
-                      
-                      <Button
-                        variant={item.myVote === "down" ? "destructive" : "outline"}
-                        size="sm"
-                        onClick={() => handleVote(item.id, "down")}
-                        className="flex-1 text-mobile-xs"
-                        disabled={!!item.myVote && item.myVote !== "down"}
-                      >
-                        <ThumbsDown className="h-3 w-3 mr-1" />
-                        Downvote
-                      </Button>
+            {/* Recent Votes */}
+            <Card className="p-4 bg-gradient-card border-border/50">
+              <h3 className="text-base font-semibold text-foreground mb-3">Recent Votes</h3>
+              <div className="space-y-3">
+                {votingItems.filter(item => item.myVote).slice(0, 3).map((item) => (
+                  <div key={item.id} className="flex items-start space-x-3">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                      item.myVote === 'up' ? 'bg-success/20' : 'bg-destructive/20'
+                    }`}>
+                      {item.myVote === 'up' ? 
+                        <ThumbsUp className="h-3 w-3 text-success" /> : 
+                        <ThumbsDown className="h-3 w-3 text-destructive" />
+                      }
                     </div>
-                    
-                    {item.myVote && (
-                      <div className="text-center">
-                        <Badge className="bg-accent/20 text-accent border-0 text-mobile-xs">
-                          Vote recorded! +{item.reward} CP earned
-                        </Badge>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground truncate">{item.title}</p>
+                      <div className="flex items-center space-x-2">
+                        <Badge variant="outline" className="text-xs">{item.category}</Badge>
+                        <span className="text-xs text-accent">+{item.reward} CP</span>
                       </div>
-                    )}
+                    </div>
                   </div>
-                </Card>
-              );
-            })}
+                ))}
+              </div>
+            </Card>
+
+            {/* Trending Topics */}
+            <Card className="p-4 bg-gradient-card border-border/50">
+              <h3 className="text-base font-semibold text-foreground mb-3">Trending Topics</h3>
+              <div className="space-y-2">
+                {["DeFi", "NFT", "Governance"].map((topic, index) => (
+                  <div key={topic} className="flex items-center justify-between">
+                    <span className="text-sm text-foreground">{topic}</span>
+                    <div className="flex items-center space-x-1">
+                      <TrendingUp className="h-3 w-3 text-success" />
+                      <span className="text-xs text-muted-foreground">
+                        {15 - index * 3} votes
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </div>
         </div>
       </div>

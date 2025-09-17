@@ -205,24 +205,87 @@ export default function Discover() {
       {/* Hero Card */}
       <HeroCard />
 
-      <div className="p-4 space-y-6">
-        {/* Featured dApps */}
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Sparkles className="h-4 w-4 text-accent" />
-            <h2 className="text-mobile-base font-semibold text-foreground">{t('featuredDApps')}</h2>
-          </div>
+      <div className="p-4 md:px-6 lg:px-8 space-y-6">
+        {/* Desktop: Grid layout for sections */}
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8 space-y-6 lg:space-y-0">
           
-          <Carousel className="w-full">
-            <CarouselContent>
-              {mockDApps.filter(dapp => dapp.featured).map((dapp) => (
-                <CarouselItem key={dapp.id}>
-                  <Card className="p-4 bg-gradient-card border-border/50 interactive-scale">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-8 space-y-6">
+            {/* Featured dApps */}
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="h-4 w-4 text-accent" />
+                <h2 className="text-mobile-base md:text-base font-semibold text-foreground">{t('featuredDApps')}</h2>
+              </div>
+              
+              {/* Mobile: Carousel, Desktop: Grid */}
+              <div className="block md:hidden">
+                <Carousel className="w-full">
+                  <CarouselContent>
+                    {mockDApps.filter(dapp => dapp.featured).map((dapp) => (
+                      <CarouselItem key={dapp.id}>
+                        <Card className="p-4 bg-gradient-card border-border/50 interactive-scale">
+                          <div className="flex space-x-3">
+                            <div className="w-12 h-12 bg-muted rounded-lg overflow-hidden">
+                              <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div className="flex-1 space-y-2">
+                              <div className="flex items-start justify-between">
+                                <div>
+                                  <h3 className="text-mobile-sm font-semibold text-foreground">
+                                    {dapp.name}
+                                  </h3>
+                                  <p className="text-mobile-xs text-muted-foreground">
+                                    {dapp.description}
+                                  </p>
+                                </div>
+                                <Button size="sm" variant="ghost" className="p-1">
+                                  <Heart className="h-4 w-4" />
+                                </Button>
+                              </div>
+                              
+                              <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-1">
+                                  <Star className="h-3 w-3 text-accent fill-current" />
+                                  <span className="text-mobile-xs text-foreground">{dapp.rating}</span>
+                                </div>
+                                <div className="flex items-center space-x-1">
+                                  <Users className="h-3 w-3 text-muted-foreground" />
+                                  <span className="text-mobile-xs text-muted-foreground">{dapp.users}</span>
+                                </div>
+                                {dapp.tvl && (
+                                  <Badge variant="secondary" className="text-mobile-xs">
+                                    TVL {dapp.tvl}
+                                  </Badge>
+                                )}
+                              </div>
+                              
+                              <div className="flex items-center space-x-2">
+                                <Button size="sm" className="flex-1 text-mobile-xs h-7">
+                                  {t('voteEarnCP')}
+                                </Button>
+                                <Button size="sm" variant="outline" className="p-1">
+                                  <ExternalLink className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+              </div>
+              
+              {/* Desktop: Grid */
+}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-1 gap-4">
+                {mockDApps.filter(dapp => dapp.featured).map((dapp) => (
+                  <Card key={dapp.id} className="p-4 bg-gradient-card border-border/50 interactive-scale">
                     <div className="flex space-x-3">
                       <div className="w-12 h-12 bg-muted rounded-lg overflow-hidden">
                         <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
                       </div>
-                      
                       <div className="flex-1 space-y-2">
                         <div className="flex items-start justify-between">
                           <div>
@@ -265,236 +328,152 @@ export default function Discover() {
                       </div>
                     </div>
                   </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
+                ))}
+              </div>
+            </div>
 
-        {/* Hot dApps */}
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Flame className="h-4 w-4 text-orange-500" />
-            <h2 className="text-mobile-base font-semibold text-foreground">{t('hotDApps')}</h2>
-          </div>
-          
-          <Carousel className="w-full">
-            <CarouselContent>
-              {Array.from({ length: Math.ceil(mockHotDApps.length / 3) }, (_, i) => (
-                <CarouselItem key={i}>
-                  <div className="space-y-3">
-                    {mockHotDApps.slice(i * 3, (i + 1) * 3).map((dapp, index) => (
-                      <div key={dapp.id}>
-                        <div className="flex items-center space-x-3 py-2">
-                          <div className="w-10 h-10 bg-muted rounded-lg overflow-hidden">
-                            <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
-                          </div>
-                          
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-mobile-sm font-medium text-foreground truncate">
-                                {dapp.name}
-                              </h3>
-                              <div className="flex items-center space-x-1">
-                                <Star className="h-3 w-3 text-accent fill-current" />
-                                <span className="text-mobile-xs text-foreground">{dapp.rating}</span>
-                              </div>
-                            </div>
-                            <p className="text-mobile-xs text-muted-foreground truncate">
-                              {dapp.description}
-                            </p>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <Badge variant="outline" className="text-mobile-xs">
-                                {dapp.category}
-                              </Badge>
-                              <span className="text-mobile-xs text-muted-foreground">
-                                {dapp.votes} votes
-                              </span>
-                            </div>
+            {/* All dApps with Search */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-mobile-base md:text-base font-semibold text-foreground">{t('allDApps')}</h2>
+                <div className="relative w-48 md:w-64">
+                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                  <Input
+                    placeholder={t('search')}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-7 text-mobile-xs md:text-sm h-8 md:h-9"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-3 md:grid md:grid-cols-2 lg:grid-cols-1 md:gap-4 md:space-y-0">
+                {filteredAllDApps.map((dapp, index) => (
+                  <div key={dapp.id}>
+                    <div className="flex items-center space-x-3 py-2 md:p-3 md:bg-gradient-card md:rounded-lg md:border md:border-border/50">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-lg overflow-hidden">
+                        <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-mobile-sm md:text-sm font-medium text-foreground truncate">
+                            {dapp.name}
+                          </h3>
+                          <div className="flex items-center space-x-1">
+                            <Star className="h-3 w-3 text-accent fill-current" />
+                            <span className="text-mobile-xs md:text-sm text-foreground">{dapp.rating}</span>
                           </div>
                         </div>
-                        {index < 2 && mockHotDApps.slice(i * 3, (i + 1) * 3).length > index + 1 && (
-                          <Separator className="my-2" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
-
-        {/* Vote Highlight */}
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <ThumbsUp className="h-4 w-4 text-primary" />
-            <h2 className="text-mobile-base font-semibold text-foreground">{t('voteDApps')}</h2>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-          </div>
-          
-          <Carousel className="w-full">
-            <CarouselContent>
-              {mockVoteItems.map((item) => (
-                <CarouselItem key={item.id}>
-                  <Card className="p-4 bg-gradient-card border-border/50 interactive-scale">
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <Badge variant="outline" className="text-mobile-xs">
-                          {item.category}
-                        </Badge>
-                        <Badge className="bg-accent/20 text-accent border-0 text-mobile-xs">
-                          +{item.reward} CP
-                        </Badge>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-mobile-sm font-semibold text-foreground mb-1">
-                          {item.title}
-                        </h3>
-                        <p className="text-mobile-xs text-muted-foreground">
-                          {item.description}
+                        <p className="text-mobile-xs md:text-sm text-muted-foreground truncate">
+                          {dapp.description}
                         </p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between text-mobile-xs text-muted-foreground">
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-3 w-3" />
-                          <span>{item.timeLeft}</span>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <Badge variant="outline" className="text-mobile-xs md:text-xs">
+                            {dapp.category}
+                          </Badge>
+                          <span className="text-mobile-xs md:text-xs text-muted-foreground">
+                            {dapp.votes} votes
+                          </span>
                         </div>
-                        <span>{item.totalVotes} votes</span>
                       </div>
-                      
-                      <Button size="sm" className="w-full text-mobile-xs">
-                        {t('voteNow')}
-                      </Button>
                     </div>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
-
-        {/* Latest dApps */}
-        <div className="space-y-3">
-          <div className="flex items-center space-x-2">
-            <Clock className="h-4 w-4 text-primary" />
-            <h2 className="text-mobile-base font-semibold text-foreground">{t('latestDApps')}</h2>
-          </div>
-          
-          <Carousel className="w-full">
-            <CarouselContent>
-              {Array.from({ length: Math.ceil(mockLatestDApps.length / 3) }, (_, i) => (
-                <CarouselItem key={i}>
-                  <div className="space-y-3">
-                    {mockLatestDApps.slice(i * 3, (i + 1) * 3).map((dapp, index) => (
-                      <div key={dapp.id}>
-                        <div className="flex items-center space-x-3 py-2">
-                          <div className="w-10 h-10 bg-muted rounded-lg overflow-hidden">
-                            <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
-                          </div>
-                          
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-mobile-sm font-medium text-foreground truncate">
-                                {dapp.name}
-                              </h3>
-                              <div className="flex items-center space-x-1">
-                                <Star className="h-3 w-3 text-accent fill-current" />
-                                <span className="text-mobile-xs text-foreground">{dapp.rating}</span>
-                              </div>
-                            </div>
-                            <p className="text-mobile-xs text-muted-foreground truncate">
-                              {dapp.description}
-                            </p>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <Badge variant="outline" className="text-mobile-xs">
-                                {dapp.category}
-                              </Badge>
-                              <span className="text-mobile-xs text-muted-foreground">
-                                {dapp.votes} votes
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        {index < 2 && mockLatestDApps.slice(i * 3, (i + 1) * 3).length > index + 1 && (
-                          <Separator className="my-2" />
-                        )}
-                      </div>
-                    ))}
+                    {index < filteredAllDApps.length - 1 && (
+                      <Separator className="my-2 md:hidden" />
+                    )}
                   </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
-
-        {/* All dApps with Search */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-mobile-base font-semibold text-foreground">{t('allDApps')}</h2>
-            
-            <div className="relative w-48">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
-              <Input
-                placeholder={t('search')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-7 text-mobile-xs h-8"
-              />
+                ))}
+              </div>
+              
+              {isLoading && (
+                <div className="text-center py-4">
+                  <p className="text-mobile-sm text-muted-foreground">Loading more dApps...</p>
+                </div>
+              )}
             </div>
           </div>
-          
-          <div className="space-y-3">
-            {filteredAllDApps.map((dapp, index) => (
-              <div key={dapp.id}>
-                <div className="flex items-center space-x-3 py-2">
-                  <div className="w-10 h-10 bg-muted rounded-lg overflow-hidden">
-                    <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-mobile-sm font-medium text-foreground truncate">
-                        {dapp.name}
-                      </h3>
-                      <div className="flex items-center space-x-1">
-                        <Star className="h-3 w-3 text-accent fill-current" />
-                        <span className="text-mobile-xs text-foreground">{dapp.rating}</span>
+
+          {/* Right Sidebar - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-4 space-y-6">
+            {/* Hot dApps */}
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Flame className="h-4 w-4 text-orange-500" />
+                <h2 className="text-base font-semibold text-foreground">{t('hotDApps')}</h2>
+              </div>
+              <div className="space-y-3">
+                {mockHotDApps.slice(0, 4).map((dapp, index) => (
+                  <div key={dapp.id}>
+                    <div className="flex items-center space-x-3 py-2">
+                      <div className="w-10 h-10 bg-muted rounded-lg overflow-hidden">
+                        <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-sm font-medium text-foreground truncate">
+                            {dapp.name}
+                          </h3>
+                          <div className="flex items-center space-x-1">
+                            <Star className="h-3 w-3 text-accent fill-current" />
+                            <span className="text-xs text-foreground">{dapp.rating}</span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground truncate">
+                          {dapp.description}
+                        </p>
                       </div>
                     </div>
-                    <p className="text-mobile-xs text-muted-foreground truncate">
-                      {dapp.description}
-                    </p>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <Badge variant="outline" className="text-mobile-xs">
-                        {dapp.category}
-                      </Badge>
-                      <span className="text-mobile-xs text-muted-foreground">
-                        {dapp.votes} votes
-                      </span>
-                    </div>
+                    {index < 3 && <Separator className="my-2" />}
                   </div>
-                </div>
-                {index < filteredAllDApps.length - 1 && <Separator className="my-2" />}
+                ))}
               </div>
-            ))}
-            
-            {isLoading && (
-              <div className="text-center py-4">
-                <div className="inline-flex items-center space-x-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
-                  <span className="text-mobile-xs text-muted-foreground">Loading more...</span>
-                </div>
-              </div>
-            )}
-            
-            {!hasMore && allDApps.length > 3 && (
-              <div className="text-center py-4">
-                <span className="text-mobile-xs text-muted-foreground">No more dApps to load</span>
-              </div>
-            )}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: Show remaining sections */}
+        <div className="block lg:hidden space-y-6">
+          {/* Hot dApps - Mobile Carousel */}
+          <div className="space-y-3">
+            <div className="flex items-center space-x-2">
+              <Flame className="h-4 w-4 text-orange-500" />
+              <h2 className="text-mobile-base font-semibold text-foreground">{t('hotDApps')}</h2>
+            </div>
+            <Carousel className="w-full">
+              <CarouselContent>
+                {Array.from({ length: Math.ceil(mockHotDApps.length / 3) }, (_, i) => (
+                  <CarouselItem key={i}>
+                    <div className="space-y-3">
+                      {mockHotDApps.slice(i * 3, (i + 1) * 3).map((dapp, index) => (
+                        <div key={dapp.id}>
+                          <div className="flex items-center space-x-3 py-2">
+                            <div className="w-10 h-10 bg-muted rounded-lg overflow-hidden">
+                              <img src={dapp.image} alt={dapp.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <h3 className="text-mobile-sm font-medium text-foreground truncate">
+                                  {dapp.name}
+                                </h3>
+                                <div className="flex items-center space-x-1">
+                                  <Star className="h-3 w-3 text-accent fill-current" />
+                                  <span className="text-mobile-xs text-foreground">{dapp.rating}</span>
+                                </div>
+                              </div>
+                              <p className="text-mobile-xs text-muted-foreground truncate">
+                                {dapp.description}
+                              </p>
+                            </div>
+                          </div>
+                          {index < 2 && mockHotDApps.slice(i * 3, (i + 1) * 3).length > index + 1 && (
+                            <Separator className="my-2" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </div>
