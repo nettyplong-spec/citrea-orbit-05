@@ -17,11 +17,11 @@ export const HeroCard = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/10" />
         
         {/* Large floating image with breakthrough effect - behind text */}
-        <div className="absolute -top-48 left-1/2 transform -translate-x-1/2 z-0 pointer-events-none">
+        <div className="absolute -top-52 left-1/2 transform -translate-x-1/2 z-0 pointer-events-none">
           <div className="relative">
             <div className="w-[576px] h-[576px] relative">
               <img 
-                src={theme === 'light' ? discoveryBoxLight : discoveryBoxDark} 
+                src={theme === 'light' ? discoveryBoxDark : discoveryBoxLight} 
                 alt="Discovery Box" 
                 className="w-full h-full object-contain drop-shadow-2xl"
               />
