@@ -1,4 +1,4 @@
-import { Wallet, Sun, Moon, Globe } from "lucide-react";
+import { Wallet, Sun, Moon, Globe, Home, Vote, BookOpen, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
   DropdownMenu,
@@ -9,6 +9,30 @@ import {
 import { useState, useEffect } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { NavLink } from "react-router-dom";
+
+const navigationItems = [
+  {
+    name: "discover",
+    path: "/",
+    icon: Home,
+  },
+  {
+    name: "vote", 
+    path: "/vote",
+    icon: Vote,
+  },
+  {
+    name: "learn",
+    path: "/learn",
+    icon: BookOpen,
+  },
+  {
+    name: "rewards",
+    path: "/rewards",
+    icon: Trophy,
+  },
+];
 
 export const MobileHeader = () => {
   const { theme, toggleTheme } = useTheme();
@@ -42,13 +66,36 @@ export const MobileHeader = () => {
         ? 'bg-card/95 backdrop-blur-lg border-b border-border/50' 
         : 'bg-transparent border-b border-transparent'
     }`}>
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex items-center justify-between px-4 py-3 md:px-6 lg:px-8">
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
             <span className="text-mobile-sm font-bold text-primary-foreground">C</span>
           </div>
           <span className="text-mobile-base font-semibold text-foreground">Citrea</span>
         </div>
+        
+        {/* Desktop/Tablet Navigation */}
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          {navigationItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    isActive 
+                      ? 'text-primary bg-primary/10' 
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                  }`
+                }
+              >
+                <Icon className="h-4 w-4" />
+                <span className="hidden lg:inline">{t(item.name)}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
         
         <div className="flex items-center space-x-2">
           {/* Language Selector */}
